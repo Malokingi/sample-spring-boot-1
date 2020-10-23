@@ -14,7 +14,7 @@ pipeline {
                 docker { image 'busybox' }
             }
             steps {
-                sh './gradlew sonarqube'
+                sh './gradlew "sonarqube"'
             }
         }
         stage('docker build') {
