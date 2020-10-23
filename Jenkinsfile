@@ -14,7 +14,7 @@ pipeline {
                 docker { image 'busybox' }
             }
             steps {
-                sh './gradlew.bat "sonarqube"'
+                sh 'chmod +x gradlew && ./gradlew sonarqube'
             }
         }
         stage('docker build') {
