@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-spring-boot
+spec:
+  replicas: 1 # 1 PODs at any given point of time
+  selector:
+    matchLabels:
+      app: sample-spring-boot
+  template:
+    metadata:
+      labels:
+        app: sample-spring-boot
+    spec:
+      containers:
+        - name: springboot-sample
+          image: <your-registry>/<your-image>:<your-tag># Docker container with our node app
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample-spring-boot-service
+  labels:
+    name: sample-spring-boot
+spec:
+  ports:
+    - port: 8080 # The service will publish the application on the default http port(80)
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: sample-spring-boot
+  type: LoadBalancer # Type loadbalancer will use the underlying cloud provider to create an external url for accessing the app
